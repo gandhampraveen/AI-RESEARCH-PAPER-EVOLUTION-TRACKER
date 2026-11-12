@@ -66,6 +66,10 @@ Open frontend at `http://localhost:5173`, API at `http://localhost:8002`, Swagge
 
 Install and start MySQL 8, then execute `database/schema.sql` in a MySQL client. Set `DATABASE_URL` in `backend/.env` to `mysql+pymysql://USER:PASSWORD@localhost/literature_tracker`. The SQL seed note explains that the Python seed loader creates illustrative development records. SQLite is the default so the demo can start without MySQL.
 
+## Render deployment
+
+The API entry point is `backend/app/main.py`, and its FastAPI instance is named `app`. Deploy the backend as a Render web service with **Root Directory** set to `backend`, **Build Command** `pip install -r requirements.txt`, and **Start Command** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. The root-level `render.yaml` applies these settings as a Blueprint. From the repository root, use `uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT` if you need to launch it without changing directories.
+
 ## Environment
 
 Backend variables are documented in `backend/.env.example`: `SECRET_KEY`, `DATABASE_URL`, `ACCESS_TOKEN_MINUTES`, `CORS_ORIGINS`. Frontend API origin is `VITE_API_URL` in `frontend/.env.example`. Change the development secret before sharing/deployment.
