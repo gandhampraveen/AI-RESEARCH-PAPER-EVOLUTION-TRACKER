@@ -68,7 +68,7 @@ Install and start MySQL 8, then execute `database/schema.sql` in a MySQL client.
 
 ## Render deployment
 
-The API entry point is `backend/app/main.py`, and its FastAPI instance is named `app`. Deploy the backend as a Render web service with **Root Directory** set to `backend`, **Build Command** `pip install -r requirements.txt`, and **Start Command** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. The root-level `render.yaml` applies these settings as a Blueprint. From the repository root, use `uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT` if you need to launch it without changing directories.
+The root-level `render.yaml` defines both services: a Python API (`backend` root) and a static Vite frontend (`frontend` root). Render builds the API with `pip install -r requirements.txt` and starts it with `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. The Blueprint wires the frontend API URL and backend CORS origin between the services, generates a secret key, and rewrites frontend routes to `index.html`.
 
 ## Environment
 
